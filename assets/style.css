@@ -86,6 +86,8 @@ header {
 
 .question-banner {
   margin-bottom: 1em;
+  text-align: left;
+  align-self: start;
 }
 
 .q-btn {
