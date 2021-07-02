@@ -1,0 +1,98 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+:root {
+  --purple: #306;
+  --pink: #c267e0;
+}
+
+h2 {
+  display: block;
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+p {
+  font-size: 1.2em;
+}
+
+.centered {
+  text-align: center;
+}
+
+.btn {
+  background-color: var(--purple);
+  color: white;
+  font-size: 1.2em;
+  border-style: none;
+  border-radius: 1em;
+}
+
+.btn:hover {
+  background-color: var(--pink);
+}
+
+/* HEADER STYLE */
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.7em;
+  margin-bottom: 1.5em;
+}
+
+.high-score-link {
+  color: var(--pink);
+}
+
+/* WELCOME SCREEN STYLE */
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70ch;
+  margin: 0 auto;
+}
+
+.welcome-banner {
+  margin-bottom: 1em;
+}
+
+.welcome-text {
+  font-weight: lighter;
+  line-height: 1.5;
+  margin-bottom: 1em;
+}
+
+.start-btn {
+  padding: 0.5em 1.2em;
+  width: max-content;
+}
+
+/* QUESTIONS STYLE */
+.questions {
+  display: flex;
+  flex-direction: column;
+  width: 70ch;
+  margin: 0 auto;
+}
+
+.question-banner {
+  margin-bottom: 1em;
+}
+
+.q-btn {
+  margin-bottom: 0.5em;
+  font-weight: lighter;
+  padding: 0.5em 1.2em;
+  width: 100%;
+  height: 70px;
+  text-align: left;
+}
