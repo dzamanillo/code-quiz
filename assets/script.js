@@ -6,6 +6,7 @@ var timerSpanEl = document.getElementById("timer-counter");
 var welcomeBannerEl = document.querySelector(".welcome-banner");
 
 var timeLeft = 60;
+var questionCounter = 0;
 
 // Question Array
 var questionArr = [
@@ -80,31 +81,19 @@ function countDown() {
     if (timeLeft < -1) {
       clearInterval(timeInterval);
       timerSpanEl.textContent = "0";
-      alert("boom");
     }
   }, 1000);
 }
 
 // Remove Function
 var remover = function () {
-  var target = Array.from(welcomeContainerEl.children);
+  var removerTarget = Array.from(welcomeContainerEl.children);
 
-  for (var i = 0; i < target.length; i++) {
-    var targetSingle = target[i];
-    targetSingle.remove();
+  for (var i = 0; i < removerTarget.length; i++) {
+    var removerTargetSingle = removerTarget[i];
+    removerTargetSingle.remove();
   }
 };
-
-// Welcome disappear Function
-// var welcomeDisappear = function () {
-//   var welcomeBannerEl = document.querySelector(".welcome-banner");
-//   welcomeBannerEl.remove();
-
-//   var welcomeTextEl = document.querySelector(".welcome-text");
-//   welcomeTextEl.remove();
-
-//   startBtnEl.remove();
-// };
 
 // Questions Function
 var questions = function () {
@@ -112,32 +101,32 @@ var questions = function () {
   questionContainer.classList.add("questions");
 
   var questionPrompt = document.createElement("h2");
-  questionPrompt.innerText = questionArr[0].q;
+  questionPrompt.innerText = questionArr[questionCounter].q;
   questionPrompt.classList.add("question-banner");
 
   var q1a1 = document.createElement("button");
-  q1a1.innerText = "1. " + questionArr[0].a1;
+  q1a1.innerText = "1. " + questionArr[questionCounter].a1;
   q1a1.classList.add("btn");
   q1a1.classList.add("q-btn");
-  q1a1.setAttribute("solution", questionArr[0].s1);
+  q1a1.setAttribute("solution", questionArr[questionCounter].s1);
 
   var q1a2 = document.createElement("button");
-  q1a2.innerText = "2. " + questionArr[0].a2;
+  q1a2.innerText = "2. " + questionArr[questionCounter].a2;
   q1a2.classList.add("btn");
   q1a2.classList.add("q-btn");
-  q1a2.setAttribute("solution", questionArr[0].s2);
+  q1a2.setAttribute("solution", questionArr[questionCounter].s2);
 
   var q1a3 = document.createElement("button");
-  q1a3.innerText = "3. " + questionArr[0].a3;
+  q1a3.innerText = "3. " + questionArr[questionCounter].a3;
   q1a3.classList.add("btn");
   q1a3.classList.add("q-btn");
-  q1a3.setAttribute("solution", questionArr[0].s3);
+  q1a3.setAttribute("solution", questionArr[questionCounter].s3);
 
   var q1a4 = document.createElement("button");
-  q1a4.innerText = "4. " + questionArr[0].a4;
+  q1a4.innerText = "4. " + questionArr[questionCounter].a4;
   q1a4.classList.add("btn");
   q1a4.classList.add("q-btn");
-  q1a4.setAttribute("solution", questionArr[0].s4);
+  q1a4.setAttribute("solution", questionArr[questionCounter].s4);
 
   welcomeContainerEl.append(
     questionContainer,
@@ -152,6 +141,7 @@ var questions = function () {
 var startGame = function () {
   remover();
   questions();
+  countDown();
 };
 
 startBtnEl.addEventListener("click", startGame);
@@ -163,9 +153,23 @@ var anwserContainerButtonHandler = function (event) {
   if (targetEl.matches("[solution=true]")) {
     timerSpanEl.innerText = "you did it!";
   } else if (targetEl.matches("[solution=false]")) {
-    timerSpanEl.innerText = "you didn't do it!";
+    timeLeft = timeLeft - 10;
   } else {
     return;
+  }
+
+  if (timeLeft <= 0) {
+    alert("game over");
+  } else {
+    if (questionCounter < 4) {
+      questionCounter++;
+      console.log(questionCounter);
+      remover();
+      questions();
+    } else {
+      timerSpanEl.innerText = "0";
+      alert("game over");
+    }
   }
 };
 
