@@ -85,16 +85,26 @@ function countDown() {
   }, 1000);
 }
 
-// Welcome disappear Function
-var welcomeDisappear = function () {
-  var welcomeBannerEl = document.querySelector(".welcome-banner");
-  welcomeBannerEl.remove();
+// Remove Function
+var remover = function () {
+  var target = Array.from(welcomeContainerEl.children);
 
-  var welcomeTextEl = document.querySelector(".welcome-text");
-  welcomeTextEl.remove();
-
-  startBtnEl.remove();
+  for (var i = 0; i < target.length; i++) {
+    var targetSingle = target[i];
+    targetSingle.remove();
+  }
 };
+
+// Welcome disappear Function
+// var welcomeDisappear = function () {
+//   var welcomeBannerEl = document.querySelector(".welcome-banner");
+//   welcomeBannerEl.remove();
+
+//   var welcomeTextEl = document.querySelector(".welcome-text");
+//   welcomeTextEl.remove();
+
+//   startBtnEl.remove();
+// };
 
 // Questions Function
 var questions = function () {
@@ -140,7 +150,7 @@ var questions = function () {
 };
 
 var startGame = function () {
-  welcomeDisappear();
+  remover();
   questions();
 };
 
