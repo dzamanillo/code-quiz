@@ -4,7 +4,8 @@ var welcomeContainerEl = document.querySelector(".welcome-container");
 var startBtnEl = document.querySelector(".start-btn");
 var timerSpanEl = document.getElementById("timer-counter");
 var welcomeBannerEl = document.querySelector(".welcome-banner");
-
+var rightOrWrongEl = document.querySelector(".right-or-wrong");
+var rightOrWrongH3El = document.getElementById("anwser-feedback");
 var timeLeft = 60;
 var questionCounter = 0;
 
@@ -139,9 +140,9 @@ var questions = function () {
 };
 
 var startGame = function () {
+  countDown();
   remover();
   questions();
-  countDown();
 };
 
 startBtnEl.addEventListener("click", startGame);
@@ -151,9 +152,12 @@ var anwserContainerButtonHandler = function (event) {
   var targetEl = event.target;
 
   if (targetEl.matches("[solution=true]")) {
-    timerSpanEl.innerText = "you did it!";
+    rightOrWrongEl.style = "block";
+    rightOrWrongH3El.innerText = "Correct";
   } else if (targetEl.matches("[solution=false]")) {
     timeLeft = timeLeft - 10;
+    rightOrWrongEl.style = "block";
+    rightOrWrongH3El.innerText = "Wrong";
   } else {
     return;
   }
