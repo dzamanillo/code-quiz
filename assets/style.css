@@ -50,6 +50,8 @@ header {
 
 .high-score-link {
   color: var(--pink);
+  text-decoration: none;
+  font-size: 1.2em;
 }
 
 /* WELCOME SCREEN STYLE */
@@ -121,4 +123,42 @@ header {
 
 .rwDisplay {
   display: none;
+}
+
+/* All Done Page */
+
+.final-score {
+  text-align: left;
+  font-size: 1.6em;
+  font-weight: 300;
+  align-self: start;
+  margin-bottom: 1em;
+  padding-right: 1em;
+}
+
+.user-sub {
+  display: flex;
+  justify-content: start;
+  align-self: start;
+  margin-right: 1em;
+  align-items: center;
+}
+
+.enter-initials {
+  text-align: left;
+  font-size: 1.6em;
+  font-weight: 300;
+  margin-bottom: none;
+  padding-right: 1em;
+}
+
+input {
+  height: 3em;
+  margin-right: 1em;
+  width: 20em;
+}
+
+.submit-btn {
+  height: 2em;
+  width: 5em;
 }

@@ -6,6 +6,9 @@ var timerSpanEl = document.getElementById("timer-counter");
 var welcomeBannerEl = document.querySelector(".welcome-banner");
 var rightOrWrongEl = document.querySelector(".right-or-wrong");
 var rightOrWrongH3El = document.getElementById("anwser-feedback");
+var leaderBoardEl = document.getElementById("high-score-leader-board");
+
+// Timers and Counters
 var timeLeft = 60;
 var questionCounter = 0;
 
@@ -83,6 +86,10 @@ function countDown() {
       clearInterval(timeInterval);
       timerSpanEl.textContent = "0";
     }
+    if (questionCounter >= 4) {
+      clearInterval(timeInterval);
+      timerSpanEl.innerText = timeLeft;
+    }
   }, 1000);
 }
 
@@ -93,6 +100,10 @@ var remover = function () {
   for (var i = 0; i < removerTarget.length; i++) {
     var removerTargetSingle = removerTarget[i];
     removerTargetSingle.remove();
+
+    if (questionCounter >= 4 || timeLeft < -1) {
+      rightOrWrongEl.remove();
+    }
   }
 };
 
@@ -164,17 +175,81 @@ var anwserContainerButtonHandler = function (event) {
 
   if (timeLeft <= 0) {
     alert("game over");
+    scoreForm();
   } else {
     if (questionCounter < 4) {
       questionCounter++;
       console.log(questionCounter);
       remover();
       questions();
+    } else if (questionCounter >= 4) {
+      scoreForm();
     } else {
       timerSpanEl.innerText = "0";
       alert("game over");
+      scoreForm();
     }
   }
 };
 
 welcomeContainerEl.addEventListener("click", anwserContainerButtonHandler);
+
+// End Game
+var scoreForm = function () {
+  remover();
+
+  timerSpanEl.textContent = timeLeft;
+
+  // Create Score Input and Message
+  var allDone = document.createElement("h2");
+  allDone.innerText = "All Done!";
+  allDone.classList.add("question-banner");
+
+  var finalScore = document.createElement("p");
+  finalScore.classList.add("final-score");
+  finalScore.innerHTML = "Your final score is " + timeLeft;
+
+  //Div for enter initials text field and button
+  var userSubDiv = document.createElement("div");
+  userSubDiv.classList.add("user-sub");
+
+  var enterPromptText = document.createElement("p");
+  enterPromptText.classList.add("enter-initials");
+  enterPromptText.textContent = "Enter initials:";
+
+  var textArea = document.createElement("input");
+  textArea.setAttribute("type", "text");
+  textArea.setAttribute("id", "user-initials");
+
+  var submitBtn = document.createElement("button");
+  submitBtn.setAttribute("type", "button");
+  submitBtn.classList.add("submit-btn");
+  submitBtn.classList.add("btn");
+  submitBtn.textContent = "Submit";
+
+  // Appends
+  userSubDiv.append(enterPromptText, textArea, submitBtn);
+
+  welcomeContainerEl.append(allDone, finalScore, userSubDiv);
+};
+
+testArr = [
+  {
+    number: 10,
+  },
+  {
+    number: 26,
+  },
+  {
+    number: 6,
+  },
+  {
+    number: 39,
+  },
+];
+
+testArr.sort(function (a, b) {
+  if (a.number < b.number) return 1;
+  if (a.number > b.number) return -1;
+  if (a.number === b.number) return 0;
+});
