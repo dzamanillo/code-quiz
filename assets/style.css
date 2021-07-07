@@ -140,7 +140,7 @@ header {
   display: flex;
   justify-content: start;
   align-self: start;
-  margin-right: 1em;
+
   align-items: center;
 }
 
@@ -161,4 +161,63 @@ input {
 .submit-btn {
   height: 2em;
   width: 5em;
+  background-color: var(--purple);
+  color: white;
+  font-size: 1.2em;
+  border-style: none;
+  border-radius: 1em;
+}
+
+.submit.btn:hover {
+  background-color: var(--pink);
+}
+
+.newContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70ch;
+  margin: 0 auto;
+  margin-bottom: 1em;
+}
+
+/* High Score Page */
+.high-score-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 70ch;
+  margin: 6em auto 0;
+  margin-bottom: 1em;
+}
+
+.high-score-container h1 {
+  margin-bottom: 0.5em;
+}
+
+.button-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+#go-back-btn,
+#clear-score-btn {
+  width: 250px;
+  height: 2em;
+  margin: 1em;
+}
+
+.score-list {
+  list-style: none;
+  width: 95%;
+}
+
+.score-list li {
+  font-size: 1.2em;
+
+  padding: 0.25em;
+}
+
+.score-list li:nth-child(odd) {
+  background-color: #ccccff;
 }

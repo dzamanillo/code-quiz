@@ -7,6 +7,8 @@ var welcomeBannerEl = document.querySelector(".welcome-banner");
 var rightOrWrongEl = document.querySelector(".right-or-wrong");
 var rightOrWrongH3El = document.getElementById("anwser-feedback");
 var leaderBoardEl = document.getElementById("high-score-leader-board");
+var highScoreLinkEl = document.querySelector(".high-score-link");
+var headerPEl = document.getElementById("header-p");
 
 // Timers and Counters
 var timeLeft = 60;
@@ -107,11 +109,13 @@ var remover = function () {
   }
 };
 
+var headerRemover = function () {
+  highScoreLinkEl.remove();
+  headerPEl.remove();
+};
+
 // Questions Function
 var questions = function () {
-  var questionContainer = document.createElement("div");
-  questionContainer.classList.add("questions");
-
   var questionPrompt = document.createElement("h2");
   questionPrompt.innerText = questionArr[questionCounter].q;
   questionPrompt.classList.add("question-banner");
@@ -140,14 +144,7 @@ var questions = function () {
   q1a4.classList.add("q-btn");
   q1a4.setAttribute("solution", questionArr[questionCounter].s4);
 
-  welcomeContainerEl.append(
-    questionContainer,
-    questionPrompt,
-    q1a1,
-    q1a2,
-    q1a3,
-    q1a4
-  );
+  welcomeContainerEl.append(questionPrompt, q1a1, q1a2, q1a3, q1a4);
 };
 
 var startGame = function () {
@@ -161,33 +158,37 @@ startBtnEl.addEventListener("click", startGame);
 // Anwer button handler Function
 var anwserContainerButtonHandler = function (event) {
   var targetEl = event.target;
-
-  if (targetEl.matches("[solution=true]")) {
-    rightOrWrongEl.style = "block";
-    rightOrWrongH3El.innerText = "Correct";
-  } else if (targetEl.matches("[solution=false]")) {
-    timeLeft = timeLeft - 10;
-    rightOrWrongEl.style = "block";
-    rightOrWrongH3El.innerText = "Wrong";
+  if (targetEl.matches("#subBtn")) {
+    highScoreBuilder();
+    highScorePage();
   } else {
-    return;
-  }
-
-  if (timeLeft <= 0) {
-    alert("game over");
-    scoreForm();
-  } else {
-    if (questionCounter < 4) {
-      questionCounter++;
-      console.log(questionCounter);
-      remover();
-      questions();
-    } else if (questionCounter >= 4) {
-      scoreForm();
+    if (targetEl.matches("[solution=true]")) {
+      rightOrWrongEl.style = "block";
+      rightOrWrongH3El.innerText = "Correct";
+    } else if (targetEl.matches("[solution=false]")) {
+      timeLeft = timeLeft - 10;
+      rightOrWrongEl.style = "block";
+      rightOrWrongH3El.innerText = "Wrong";
     } else {
-      timerSpanEl.innerText = "0";
+      return;
+    }
+
+    if (timeLeft <= 0) {
       alert("game over");
       scoreForm();
+    } else {
+      if (questionCounter < 4) {
+        questionCounter++;
+        console.log(questionCounter);
+        remover();
+        questions();
+      } else if (questionCounter >= 4) {
+        scoreForm();
+      } else {
+        timerSpanEl.innerText = "0";
+        alert("game over");
+        scoreForm();
+      }
     }
   }
 };
@@ -210,8 +211,11 @@ var scoreForm = function () {
   finalScore.innerHTML = "Your final score is " + timeLeft;
 
   //Div for enter initials text field and button
-  var userSubDiv = document.createElement("div");
+  var userSubDiv = document.createElement("form");
   userSubDiv.classList.add("user-sub");
+  userSubDiv.classList.add("hidder");
+  userSubDiv.setAttribute("action", "index.html");
+  userSubDiv.setAttribute("method", "get");
 
   var enterPromptText = document.createElement("p");
   enterPromptText.classList.add("enter-initials");
@@ -222,9 +226,10 @@ var scoreForm = function () {
   textArea.setAttribute("id", "user-initials");
 
   var submitBtn = document.createElement("button");
-  submitBtn.setAttribute("type", "button");
+  submitBtn.setAttribute("type", "submit");
+  submitBtn.setAttribute("id", "subBtn");
   submitBtn.classList.add("submit-btn");
-  submitBtn.classList.add("btn");
+  submitBtn.classList.add("high-score-link");
   submitBtn.textContent = "Submit";
 
   // Appends
@@ -232,6 +237,34 @@ var scoreForm = function () {
 
   welcomeContainerEl.append(allDone, finalScore, userSubDiv);
 };
+
+// High Score
+var highScoreBuilder = function () {
+  var userInitEL = document.querySelector("#user-initials").value;
+  console.log(userInitEL); // IN CLASS STUFF \/
+  remover();
+  headerRemover();
+
+  var userScore = timeLeft;
+
+  var playerStats = {
+    name: userInitEL,
+    score: userScore,
+  };
+
+  var scoresArr = JSON.parse(localStorage.getItem("scores")) || [];
+
+  scoresArr.push(playerStats);
+
+  localStorage.setItem("scores", JSON.stringify(scoresArr));
+};
+
+//Go to High Score
+var highScorePage = function () {
+  window.location.replace("scores.html");
+};
+
+highScoreLinkEl;
 
 testArr = [
   {
