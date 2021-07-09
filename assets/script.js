@@ -81,14 +81,14 @@ var questionArr = [
 // Timer Countdown
 function countDown() {
   var timeInterval = setInterval(function () {
-    console.log(timeLeft);
     timerSpanEl.textContent = timeLeft;
     timeLeft--;
     if (timeLeft < -1) {
       clearInterval(timeInterval);
       timerSpanEl.textContent = "0";
+      scoreForm();
     }
-    if (questionCounter >= 4) {
+    if (questionCounter > 4) {
       clearInterval(timeInterval);
       timerSpanEl.innerText = timeLeft;
     }
@@ -174,19 +174,17 @@ var anwserContainerButtonHandler = function (event) {
     }
 
     if (timeLeft <= 0) {
-      alert("game over");
       scoreForm();
     } else {
-      if (questionCounter < 4) {
-        questionCounter++;
-        console.log(questionCounter);
+      if (questionCounter <= 3) {
         remover();
+        questionCounter++;
         questions();
       } else if (questionCounter >= 4) {
         scoreForm();
       } else {
         timerSpanEl.innerText = "0";
-        alert("game over");
+
         scoreForm();
       }
     }
@@ -198,6 +196,10 @@ welcomeContainerEl.addEventListener("click", anwserContainerButtonHandler);
 // End Game
 var scoreForm = function () {
   remover();
+
+  if (timeLeft < 0) {
+    timeLeft = 0;
+  }
 
   timerSpanEl.textContent = timeLeft;
 
@@ -213,9 +215,6 @@ var scoreForm = function () {
   //Div for enter initials text field and button
   var userSubDiv = document.createElement("form");
   userSubDiv.classList.add("user-sub");
-  userSubDiv.classList.add("hidder");
-  userSubDiv.setAttribute("action", "index.html");
-  userSubDiv.setAttribute("method", "get");
 
   var enterPromptText = document.createElement("p");
   enterPromptText.classList.add("enter-initials");
@@ -241,11 +240,13 @@ var scoreForm = function () {
 // High Score
 var highScoreBuilder = function () {
   var userInitEL = document.querySelector("#user-initials").value;
-  console.log(userInitEL); // IN CLASS STUFF \/
+
   remover();
   headerRemover();
 
   var userScore = timeLeft;
+
+  userScore.min = "0";
 
   var playerStats = {
     name: userInitEL,
@@ -263,26 +264,3 @@ var highScoreBuilder = function () {
 var highScorePage = function () {
   window.location.replace("scores.html");
 };
-
-highScoreLinkEl;
-
-testArr = [
-  {
-    number: 10,
-  },
-  {
-    number: 26,
-  },
-  {
-    number: 6,
-  },
-  {
-    number: 39,
-  },
-];
-
-testArr.sort(function (a, b) {
-  if (a.number < b.number) return 1;
-  if (a.number > b.number) return -1;
-  if (a.number === b.number) return 0;
-});
