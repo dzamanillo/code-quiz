@@ -244,6 +244,10 @@ var highScoreBuilder = function () {
   remover();
   headerRemover();
 
+  if (!userInitEL) {
+    userInitEL = "No Initials Entered";
+  }
+
   var userScore = timeLeft;
 
   userScore.min = "0";
