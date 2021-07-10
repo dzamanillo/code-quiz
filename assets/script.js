@@ -109,6 +109,7 @@ var remover = function () {
   }
 };
 
+// Header Remove Function
 var headerRemover = function () {
   highScoreLinkEl.remove();
   headerPEl.remove();
@@ -147,21 +148,26 @@ var questions = function () {
   welcomeContainerEl.append(questionPrompt, q1a1, q1a2, q1a3, q1a4);
 };
 
+// Start Game Function
 var startGame = function () {
   countDown();
   remover();
   questions();
 };
 
+// Start Button
 startBtnEl.addEventListener("click", startGame);
 
-// Anwer button handler Function
+// Answer button handler Function
 var anwserContainerButtonHandler = function (event) {
   var targetEl = event.target;
+
+  //target submit initials btn
   if (targetEl.matches("#subBtn")) {
     highScoreBuilder();
     highScorePage();
   } else {
+    // target multiple choice
     if (targetEl.matches("[solution=true]")) {
       rightOrWrongEl.style = "block";
       rightOrWrongH3El.innerText = "Correct";
@@ -184,16 +190,16 @@ var anwserContainerButtonHandler = function (event) {
         scoreForm();
       } else {
         timerSpanEl.innerText = "0";
-
         scoreForm();
       }
     }
   }
 };
 
+// Btn for answers
 welcomeContainerEl.addEventListener("click", anwserContainerButtonHandler);
 
-// End Game
+// Score Form Function
 var scoreForm = function () {
   remover();
 
